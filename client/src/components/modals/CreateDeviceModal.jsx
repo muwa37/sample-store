@@ -1,13 +1,16 @@
 import { useContext, useState } from 'react';
-import { Button, Dropdown, Form, Modal } from 'react-bootstrap';
+import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { Context } from '../..';
 
 const CreateDeviceModal = ({ show, onHide }) => {
   const { device } = useContext(Context);
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState([]);
 
   const addInfo = () => {
     setInfo([...info, { title: '', description: '', number: Date.now() }]);
+  };
+  const removeInfo = number => {
+    setInfo([...info].filter(i => i.number !== number));
   };
 
   return (
@@ -45,6 +48,24 @@ const CreateDeviceModal = ({ show, onHide }) => {
             <Button variant='outline-dark' onClick={addInfo}>
               add new specification
             </Button>
+            {info.map(i => (
+              <Row className='mt-3' key={i.number}>
+                <Col md={4}>
+                  <Form.Control placeholder='title...' />
+                </Col>
+                <Col md={4}>
+                  <Form.Control placeholder='description...' />
+                </Col>
+                <Col md={4}>
+                  <Button
+                    variant={'outline-danger'}
+                    onClick={() => removeInfo(i.number)}
+                  >
+                    remove
+                  </Button>
+                </Col>
+              </Row>
+            ))}
           </Form>
         </Modal.Body>
         <Modal.Footer>
