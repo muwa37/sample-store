@@ -11,9 +11,11 @@ export default class DeviceStore {
       { id: 2, name: 'example' },
     ];
     this._devices = [
-      { id: 1, name: 'sample', price: 1337, rating: 4 },
-      { id: 2, name: 'sample2', price: 228, rating: 3 },
+      { id: 1, name: 'sample', price: 1337, rating: 4, img: 'asd' },
+      { id: 2, name: 'sample2', price: 228, rating: 3, img: 'asd' },
     ];
+    this._selectedType = {};
+    this._selectedBrand = {};
     makeAutoObservable(this);
   }
 
@@ -26,6 +28,12 @@ export default class DeviceStore {
   setDevices(devices) {
     this._devices = devices;
   }
+  setSelectedType(type) {
+    this._selectedType = type;
+  }
+  setSelectedBrand(brand) {
+    this._selectedBrand = brand;
+  }
 
   get types() {
     return this._types;
@@ -35,5 +43,11 @@ export default class DeviceStore {
   }
   get devices() {
     return this._devices;
+  }
+  get selectedType() {
+    return this._selectedType;
+  }
+  get selectedBrand() {
+    return this._selectedBrand;
   }
 }
