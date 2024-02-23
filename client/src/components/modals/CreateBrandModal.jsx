@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { createBrand } from '../../api/deviceAPI';
 
 const CreateBrandModal = ({ show, onHide }) => {
+  const [brandName, setBrandName] = useState('');
+  const addBrand = () => {
+    createBrand({ name: brandName }).then(data => setBrandName(''));
+    onHide();
+  };
+
   return (
     <div>
       <Modal show={show} onHide={onHide} size='lg' centered>
@@ -9,14 +17,18 @@ const CreateBrandModal = ({ show, onHide }) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Control placeholder='brand name...' />
+            <Form.Control
+              placeholder='brand name...'
+              value={brandName}
+              onChange={e => setBrandName(e.target.value)}
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='outline-danger' onClick={onHide}>
             close
           </Button>
-          <Button variant='outline-success' onClick={onHide}>
+          <Button variant='outline-success' onClick={addBrand}>
             add
           </Button>
         </Modal.Footer>
